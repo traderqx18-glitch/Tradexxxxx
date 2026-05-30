@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Remix: Remix: Remix: TADEX Pro Trading Cabinet",
+  "description": "High-fidelity TADEX pro trading platform cabinet featuring live charts, indicators, fast executions, history logs, and mock asset trading rooms.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

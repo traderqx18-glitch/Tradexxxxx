@@ -1,0 +1,188 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile containing basic metadata.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "The unique user ID" },
+        "traderId": { "type": "string", "description": "The display trade account ID (e.g., TR_9X2K7B)" },
+        "email": { "type": "string", "description": "The email address of the user" },
+        "fullName": { "type": "string", "description": "Full display name of the user" },
+        "username": { "type": "string", "description": "Short username of the user" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["uid", "traderId", "email", "fullName", "username", "createdAt"]
+    },
+    "Wallet": {
+      "title": "User Wallet",
+      "description": "Account balances matching demo and live modes of the platform.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Owner userId of the wallet" },
+        "demoBalance": { "type": "number", "description": "Amount available in demo balance" },
+        "liveBalance": { "type": "number", "description": "Amount available in live budget" },
+        "currency": { "type": "string", "description": "Pre-selected ISO currency symbol" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last edit timestamp" }
+      },
+      "required": ["uid", "demoBalance", "liveBalance", "currency", "updatedAt"]
+    },
+    "Trade": {
+      "title": "Binary Trade Options",
+      "description": "A single option contract trade submitted by the user on our asset lists.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Owner of the trade option" },
+        "traderId": { "type": "string", "description": "Trader display account ID" },
+        "asset": { "type": "string", "description": "The pair identifier in active view" },
+        "direction": { "type": "string", "description": "Buy/Sell or Up/Down call status" },
+        "amount": { "type": "number", "description": "Trade budget placed on this entry" },
+        "entryPrice": { "type": "number", "description": "Asset trade rate at inception" },
+        "expirySeconds": { "type": "number", "description": "Option expiry timeframe duration in seconds" },
+        "status": { "type": "string", "description": "State identifier of the trade: open, won, lost, draw" },
+        "openedAt": { "type": "string", "format": "date-time", "description": "Trade launch date timestamp" },
+        "expiresAt": { "type": "string", "format": "date-time", "description": "Calculated expiration timestamp string" },
+        "closedAt": { "type": "string", "format": "date-time", "description": "Resolution timestamp when option expires" },
+        "result": { "type": "string", "description": "Final result code matching won, lost, draw" },
+        "pnl": { "type": "number", "description": "Net Profit and Loss outcome" }
+      },
+      "required": ["uid", "traderId", "asset", "direction", "amount", "entryPrice", "expirySeconds", "status", "openedAt", "expiresAt"]
+    },
+    "Transaction": {
+      "title": "Financing history transactions",
+      "description": "A dedicated transaction history collection for recording ledger entries.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "UUID of the transaction" },
+        "userId": { "type": "string", "description": "User identifier who performed the transaction" },
+        "type": { "type": "string", "description": "Transaction type: deposit, withdrawal, trade_win, trade_loss, bonus, adjustment" },
+        "amount": { "type": "number", "description": "Balance size added or subtracted" },
+        "method": { "type": "string", "description": "Payment retrieval or load method, e.g. USDT TRC20" },
+        "status": { "type": "string", "description": "The transaction status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Transaction creation date-time stamp" },
+        "referenceId": { "type": "string", "description": "ID of relevant deposit, withdrawal, or trade" }
+      },
+      "required": ["id", "userId", "type", "amount", "status", "createdAt"]
+    },
+    "PromoCode": {
+      "title": "Deposit Promo Code",
+      "description": "Bonus codes available for additional percentage on deposit",
+      "type": "object",
+      "properties": {
+        "code": { "type": "string", "description": "The promo code text, e.g. TRADEX20" },
+        "bonusPercent": { "type": "number", "description": "Percentage bonus, e.g. 20" },
+        "active": { "type": "boolean", "description": "Active status of the code" }
+      },
+      "required": ["code", "bonusPercent", "active"]
+    },
+    "Deposit": {
+      "title": "USDT options deposit requests",
+      "description": "Manual deposit request submitted by user for merchant approval",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document unique ID descriptor" },
+        "userId": { "type": "string", "description": "User identifier submitting deposit" },
+        "username": { "type": "string", "description": "Display username" },
+        "country": { "type": "string", "description": "User country" },
+        "method": { "type": "string", "description": "Payment method chosen (e.g. USDT TRC20)" },
+        "amount": { "type": "number", "description": "Amount of the deposit" },
+        "promoCode": { "type": "string", "description": "Applied promo code or empty" },
+        "status": { "type": "string", "description": "Status: pending, approved, rejected" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation date-time stamp" },
+        "approvedAt": { "type": "string", "format": "date-time", "description": "Approval date-time stamp if approved" },
+        "approvedBy": { "type": "string", "description": "Approved by supervisor ID or username" }
+      },
+      "required": ["id", "userId", "username", "country", "method", "amount", "status", "createdAt"]
+    },
+    "Withdrawal": {
+      "title": "Cash-out withdrawal requests",
+      "description": "Manual withdrawal request subject to admin approval and live balance deduction ledger rules",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Document unique ID descriptor" },
+        "userId": { "type": "string", "description": "User identifier submitting withdrawal" },
+        "username": { "type": "string", "description": "Display username" },
+        "country": { "type": "string", "description": "User country" },
+        "method": { "type": "string", "description": "Method of retrieval: USDT TRC20, Easypaisa, etc." },
+        "amount": { "type": "number", "description": "Amount corresponding to withdrawal" },
+        "walletAddress": { "type": "string", "description": "USDT/Crypto wallet dest address" },
+        "network": { "type": "string", "description": "Crypto network such as TRC20/ERC20" },
+        "accountNumber": { "type": "string", "description": "Bank account number if applicable" },
+        "accountName": { "type": "string", "description": "Bank account name holder if applicable" },
+        "status": { "type": "string", "description": "Status: pending, processing, approved, rejected, cancelled" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation date-time stamp" },
+        "processedAt": { "type": "string", "format": "date-time", "description": "Processed date-time stamp" },
+        "processedBy": { "type": "string", "description": "Processed supervisor identifier or username" }
+      },
+      "required": ["id", "userId", "username", "country", "method", "amount", "status", "createdAt"]
+    },
+    "Asset": {
+      "title": "Trading Asset",
+      "description": "Details about a single tradable asset class.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique slug for the asset" },
+        "symbol": { "type": "string", "description": "Symbol name (e.g. EUR/USD OTC)" },
+        "displayName": { "type": "string", "description": "Display friendly name" },
+        "category": { "type": "string", "description": "Asset category" },
+        "isActive": { "type": "boolean", "description": "Active for trading" },
+        "payoutPercent": { "type": "number", "description": "Payout percentage percentage multiplier" },
+        "sortOrder": { "type": "number", "description": "Ordering priority" }
+      },
+      "required": ["id", "symbol", "displayName", "category", "isActive", "payoutPercent", "sortOrder"]
+    },
+    "Candle": {
+      "title": "Asset Candle Data",
+      "description": "A single historical chart candlestick record.",
+      "type": "object",
+      "properties": {
+        "assetId": { "type": "string", "description": "The associated parent asset id" },
+        "timestamp": { "type": "number", "description": "Epoch timestamp start of period" },
+        "open": { "type": "number", "description": "Opening rate" },
+        "high": { "type": "number", "description": "High value rate" },
+        "low": { "type": "number", "description": "Low value rate" },
+        "close": { "type": "number", "description": "Closing rate" },
+        "volume": { "type": "number", "description": "Transaction volume unit metrics" }
+      },
+      "required": ["assetId", "timestamp", "open", "high", "low", "close", "volume"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": { "$ref": "entities/User" },
+      "description": "A single user profiles matching database identity registration."
+    },
+    "wallets/{walletId}": {
+      "schema": { "$ref": "entities/Wallet" },
+      "description": "Unique wallets describing user account state and digital wallets."
+    },
+    "trades/{tradeId}": {
+      "schema": { "$ref": "entities/Trade" },
+      "description": "Full options trade ledger records."
+    },
+    "transactions/{txId}": {
+      "schema": { "$ref": "entities/Transaction" },
+      "description": "Deposit and withdrawal transfer records."
+    },
+    "promo_codes/{codeId}": {
+      "schema": { "$ref": "entities/PromoCode" },
+      "description": "Valid promotional deposit bonus codes."
+    },
+    "deposits/{depositId}": {
+      "schema": { "$ref": "entities/Deposit" },
+      "description": "Database manual deposit logs."
+    },
+    "withdrawals/{withdrawalId}": {
+      "schema": { "$ref": "entities/Withdrawal" },
+      "description": "Database manual withdrawal logs."
+    },
+    "assets/{assetId}": {
+      "schema": { "$ref": "entities/Asset" },
+      "description": "Unique asset class catalogs."
+    },
+    "candles/{candleId}": {
+      "schema": { "$ref": "entities/Candle" },
+      "description": "Asset historical candle time scales."
+    }
+  }
+}

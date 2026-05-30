@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "module": "ESNext",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "allowJs": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    },
+    "allowImportingTsExtensions": true,
+    "noEmit": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    "extracted_frontend",
+    "download-mega.cjs",
+    "replace-urls.cjs",
+    "find-html.cjs",
+    "find-auth-files.cjs",
+    "check_assets.ts",
+    "check_columns.ts",
+    "check_schema.ts",
+    "check_types.ts",
+    "check_types_part2.ts"
+  ]
+}
